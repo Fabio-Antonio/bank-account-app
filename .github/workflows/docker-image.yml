@@ -1,0 +1,23 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Build the Docker mongo image
+      run: docker build . --file Dockerfile.mongodb --tag mongodb:latest
+
+    - name: Build the Docker bank-account-app image
+      run: docker build . --file Dockerfile --tag bank-account-app:latest
