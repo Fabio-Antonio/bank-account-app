@@ -1,0 +1,14 @@
+# Usar la imagen oficial de MongoDB como base
+FROM mongo:6.0
+
+# Instalar wget
+RUN apt-get update && apt-get install -y wget
+
+# Descargar e instalar el cliente MongoDB
+RUN wget https://fastdl.mongodb.org/linux/mongodb-linux-aarch64-ubuntu2204-6.0.4.tgz && \
+    tar -zxvf mongodb-linux-aarch64-ubuntu2204-6.0.4.tgz && \
+    cp mongodb-linux-aarch64-ubuntu2204-6.0.4/bin/* /usr/local/bin/ && \
+    rm -rf mongodb-linux-aarch64-ubuntu2204-6.0.4 mongodb-linux-aarch64-ubuntu2204-6.0.4.tgz
+
+# Exponer el puerto de MongoDB
+EXPOSE 27017
