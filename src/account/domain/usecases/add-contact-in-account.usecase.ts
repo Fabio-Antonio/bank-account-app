@@ -1,11 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { IAccountService } from '../services/account-service.interface';
 import { IAccount, IContact, IMovement } from '../interfaces/account.interfaces';
+import { LoggerAction } from 'src/shared/domain/logger';
+import { LogsType } from 'src/shared/domain/interfaces/common.interfaces';
 
 @Injectable()
 export class AddContactAccountUseCase {
     constructor(
         private readonly accountService: IAccountService,
+        private readonly logger: LoggerAction
     ) { }
 
     async execute(accountId: string,
@@ -33,6 +36,7 @@ export class AddContactAccountUseCase {
 
             return await this.accountService.accountMovement(account);
         } catch (error) {
+            this.logger.log('AddContactAccountUseCase', LogsType.ERROR, error);
             return null;
         }
 
