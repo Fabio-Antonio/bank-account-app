@@ -3,11 +3,14 @@ import { IAccount } from 'src/account/domain/interfaces/account.interfaces';
 import { IAccountService } from 'src/account/domain/services/account-service.interface';
 import { IAccountDocument } from 'src/account/infrastructure/schemas/account.schema';
 import { AccountRepositoryImpl } from 'src/account/infrastructure/repositories/account.repository';
+import { LoggerAction } from 'src/shared/domain/logger';
+import { LogsType } from 'src/shared/domain/interfaces/common.interfaces';
 
 @Injectable()
 export class AccountService extends IAccountService {
   constructor(
     private readonly accountRepository: AccountRepositoryImpl,
+    private readonly logger: LoggerAction
   ) {
     super();
   }
@@ -40,7 +43,7 @@ export class AccountService extends IAccountService {
         await session.abortTransaction();
         session.endSession();
       }*/
-      console.error('Error creating account:', error);
+      this.logger.log('createAccount', LogsType.ERROR, 'Error creating account');
       return null
     }
   }
@@ -59,7 +62,7 @@ export class AccountService extends IAccountService {
     } catch (error) {
       // await session.abortTransaction();
       //session.endSession();
-      console.error('Error depositing into account:', error);
+      this.logger.log('accountMovement', LogsType.ERROR, 'Error depositing into account');
       return null
     }
   }
@@ -75,7 +78,7 @@ export class AccountService extends IAccountService {
 
       return account as IAccount;
     } catch (error) {
-      console.error('Error getting account:', error);
+      this.logger.log('getAccount', LogsType.ERROR, 'Error getting account');
       return null
     }
   }

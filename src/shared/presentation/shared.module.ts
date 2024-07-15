@@ -5,6 +5,8 @@ import { JwtStrategy } from '../infrastructure/jwt/jwt.stratergy';
 import { AuthService } from '../aplication/services/auth.service';
 import { AuthController } from './auth.controller';
 import { JwtAuthGuard } from '../infrastructure/jwt/auth-gard';
+import { LoggerAction } from '../domain/logger';
+import { LoggerImpl } from '../infrastructure/logger/logger-impl';
 
 @Global()
 @Module({
@@ -20,7 +22,7 @@ import { JwtAuthGuard } from '../infrastructure/jwt/auth-gard';
     }),
   ],
   controllers:[AuthController],
-  providers: [AuthService, JwtStrategy, JwtAuthGuard],
-  exports: [AuthService, JwtAuthGuard, JwtModule],
+  providers: [AuthService, JwtStrategy, JwtAuthGuard, {provide: LoggerAction, useClass: LoggerImpl}],
+  exports: [AuthService, JwtAuthGuard, JwtModule, LoggerAction],
 })
 export class SharedModule {}
