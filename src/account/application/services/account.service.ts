@@ -31,7 +31,7 @@ export class AccountService extends IAccountService {
         // await session.commitTransaction();
         // session.endSession();
 
-        return createdAccount;
+        return createdAccount as IAccount;
       } else {
         throw new Error('Failed to create account.');
       }
@@ -55,7 +55,7 @@ export class AccountService extends IAccountService {
       //await session.commitTransaction();
       //session.endSession();
 
-      return account;
+      return account as IAccount;
     } catch (error) {
       // await session.abortTransaction();
       //session.endSession();
@@ -73,12 +73,11 @@ export class AccountService extends IAccountService {
         throw new Error('Account not found');
       }
 
-      return account;
+      return account as IAccount;
     } catch (error) {
       console.error('Error getting account:', error);
       return null
     }
   }
-
 
 }

@@ -1,8 +1,12 @@
-name: Run Tests on PR
+name: CI
 
 on:
+  push:
+    branches:
+      - main
   pull_request:
-    branches: [main] # Define the branch where PRs trigger the workflow
+    branches:
+      - main
 
 jobs:
   test:
@@ -12,8 +16,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18'
+
       - name: Install dependencies
         run: npm install
 
       - name: Run tests
-        run: npm run run:test
+        run: npm run test

@@ -1,7 +1,17 @@
 import { Schema, Document, model, Model } from 'mongoose';
-import { ITransaction, IContact, IMovement, IAudit, IAccount, IUserInfo } from "src/account/domain/interfaces/account.interfaces";
+import { ITransaction, IContact, IMovement, IAudit, IUserInfo } from "src/account/domain/interfaces/account.interfaces";
 
-export interface IAccountDocument extends Document, IAccount {}
+export interface IAccountDocument extends Document {
+   _id?: string; 
+  accountNumber: string;
+  owner: string;
+  balance: number;
+  transactions?: ITransaction[];
+  contacts?: IContact[];
+  movements?: IMovement[];
+  auditLogs?: IAudit[];
+  userInfo: IUserInfo;
+}
 
 const transactionSchema = new Schema<ITransaction>({
   type: {
@@ -123,7 +133,7 @@ export const accountSchema = new Schema<IAccountDocument>({
     type: [auditSchema],
     default: [],
   },
-   userInfo: {
+  userInfo: {
     type: userInfoSchema,
     required: true,
   },
