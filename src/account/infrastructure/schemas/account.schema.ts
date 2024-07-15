@@ -103,10 +103,6 @@ const userInfoSchema = new Schema<IUserInfo>({
 });
 
 export const accountSchema = new Schema<IAccountDocument>({
-  _id: {
-    type: String,
-    required: false,
-  },
   accountNumber: {
     type: String,
     unique: true,
